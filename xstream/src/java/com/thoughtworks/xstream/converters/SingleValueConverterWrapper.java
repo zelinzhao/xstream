@@ -10,6 +10,7 @@
  */
 package com.thoughtworks.xstream.converters;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
@@ -42,6 +43,8 @@ public class SingleValueConverterWrapper implements Converter, SingleValueConver
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
+    	if(IgnoreTypes.ignore(source))
+    		return;
         writer.setValue(toString(source));
     }
 
