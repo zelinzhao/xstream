@@ -14,6 +14,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
@@ -60,6 +61,8 @@ public class NamedArrayConverter implements Converter {
     }
 
     public void marshal(final Object source, final HierarchicalStreamWriter writer, final MarshallingContext context) {
+    	if (IgnoreTypes.ignore(source))
+			return;
         final int length = Array.getLength(source);
         for (int i = 0; i < length; ++i) {
             final Object item = Array.get(source, i);

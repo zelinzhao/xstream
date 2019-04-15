@@ -13,6 +13,7 @@ package com.thoughtworks.xstream.converters.time;
 import java.time.Clock;
 import java.time.ZoneId;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
@@ -50,6 +51,8 @@ public class SystemClockConverter implements Converter {
 
     @Override
     public void marshal(final Object source, final HierarchicalStreamWriter writer, final MarshallingContext context) {
+    	if (IgnoreTypes.ignore(source))
+			return;
         final Clock clock = (Clock)source;
         ExtendedHierarchicalStreamWriterHelper.startNode(writer, mapper.serializedMember(Clock.class, "zone"), null);
         context.convertAnother(clock.getZone());

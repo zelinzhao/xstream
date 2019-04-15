@@ -13,6 +13,7 @@ package com.thoughtworks.xstream.converters.time;
 import java.time.DayOfWeek;
 import java.time.temporal.WeekFields;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
@@ -50,6 +51,8 @@ public class WeekFieldsConverter implements Converter {
 
     @Override
     public void marshal(final Object source, final HierarchicalStreamWriter writer, final MarshallingContext context) {
+    	if (IgnoreTypes.ignore(source))
+			return;
         final WeekFields weekFields = (WeekFields)source;
         ExtendedHierarchicalStreamWriterHelper.startNode(writer, mapper.serializedMember(WeekFields.class,
             "minimalDays"), int.class);

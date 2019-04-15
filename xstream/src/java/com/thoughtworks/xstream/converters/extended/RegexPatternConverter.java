@@ -11,6 +11,7 @@
  */
 package com.thoughtworks.xstream.converters.extended;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
@@ -44,6 +45,8 @@ public class RegexPatternConverter implements Converter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
+    	if (IgnoreTypes.ignore(source))
+			return;
         Pattern pattern = (Pattern)source;
         writer.startNode("pattern");
         writer.setValue(pattern.pattern());

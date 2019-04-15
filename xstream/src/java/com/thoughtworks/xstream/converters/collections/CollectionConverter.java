@@ -11,6 +11,7 @@
  */
 package com.thoughtworks.xstream.converters.collections;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
@@ -68,6 +69,8 @@ public class CollectionConverter extends AbstractCollectionConverter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
+    	if (IgnoreTypes.ignore(source))
+			return;
         Collection collection = (Collection) source;
         for (Iterator iterator = collection.iterator(); iterator.hasNext();) {
             Object item = iterator.next();

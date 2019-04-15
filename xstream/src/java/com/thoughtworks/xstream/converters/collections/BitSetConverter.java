@@ -11,6 +11,7 @@
  */
 package com.thoughtworks.xstream.converters.collections;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
@@ -33,6 +34,8 @@ public class BitSetConverter implements Converter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
+    	if (IgnoreTypes.ignore(source))
+			return;
         BitSet bitSet = (BitSet) source;
         StringBuffer buffer = new StringBuffer();
         boolean seenFirst = false;

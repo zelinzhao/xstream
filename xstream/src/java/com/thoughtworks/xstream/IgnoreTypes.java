@@ -3,8 +3,6 @@ package com.thoughtworks.xstream;
 import java.util.Collection;
 import java.util.HashSet;
 
-import com.thoughtworks.xstream.core.JVM;
-
 public class IgnoreTypes {
 	private static HashSet<String> ignoreNames = new HashSet<String>();
 	

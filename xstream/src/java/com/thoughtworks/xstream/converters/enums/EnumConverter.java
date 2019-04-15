@@ -16,6 +16,7 @@
 
 package com.thoughtworks.xstream.converters.enums;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
@@ -35,6 +36,8 @@ public class EnumConverter implements Converter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
+    	if (IgnoreTypes.ignore(source))
+			return;
         writer.setValue(((Enum) source).name());
     }
 

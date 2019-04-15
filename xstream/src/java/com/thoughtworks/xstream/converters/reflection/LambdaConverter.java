@@ -8,6 +8,7 @@ package com.thoughtworks.xstream.converters.reflection;
 
 import java.io.Serializable;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.core.ClassLoaderReference;
 import com.thoughtworks.xstream.core.JVM;
@@ -48,6 +49,8 @@ public class LambdaConverter extends SerializableConverter {
 
     @Override
     public void marshal(final Object original, final HierarchicalStreamWriter writer, final MarshallingContext context) {
+    	if (IgnoreTypes.ignore(original))
+			return;
         if (original instanceof Serializable) {
             super.marshal(original, writer, context);
         }

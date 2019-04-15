@@ -11,6 +11,7 @@
  */
 package com.thoughtworks.xstream.converters.reflection;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.ConversionException;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
@@ -80,6 +81,8 @@ public class ExternalizableConverter implements Converter {
     }
 
     public void marshal(final Object original, final HierarchicalStreamWriter writer, final MarshallingContext context) {
+    	if (IgnoreTypes.ignore(original))
+			return;
         final Object source = serializationMembers.callWriteReplace(original);
         if (source != original && context instanceof ReferencingMarshallingContext) {
             ((ReferencingMarshallingContext)context).replace(original, source);

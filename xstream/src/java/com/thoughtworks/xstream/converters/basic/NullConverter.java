@@ -11,6 +11,7 @@
  */
 package com.thoughtworks.xstream.converters.basic;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
@@ -31,6 +32,8 @@ public class NullConverter implements Converter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
+    	if (IgnoreTypes.ignore(source))
+			return;
         ExtendedHierarchicalStreamWriterHelper.startNode(writer, "null", Mapper.Null.class);
         writer.endNode();
     }

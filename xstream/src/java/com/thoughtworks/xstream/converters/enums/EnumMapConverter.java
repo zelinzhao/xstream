@@ -17,6 +17,7 @@
 package com.thoughtworks.xstream.converters.enums;
 
 import com.thoughtworks.xstream.converters.collections.MapConverter;
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.ConversionException;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
@@ -48,6 +49,8 @@ public class EnumMapConverter extends MapConverter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
+    	if (IgnoreTypes.ignore(source))
+			return;
         Class type = (Class) Fields.read(typeField, source);
         String attributeName = mapper().aliasForSystemAttribute("enum-type");
         if (attributeName != null) {

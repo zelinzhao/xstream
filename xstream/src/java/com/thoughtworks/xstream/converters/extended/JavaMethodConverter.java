@@ -11,6 +11,7 @@
  */
 package com.thoughtworks.xstream.converters.extended;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.ConversionException;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
@@ -65,6 +66,8 @@ public class JavaMethodConverter implements Converter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
+    	if (IgnoreTypes.ignore(source))
+			return;
         if (source instanceof Method) {
             Method method = (Method) source;
             String declaringClassName = javaClassConverter.toString(method.getDeclaringClass());

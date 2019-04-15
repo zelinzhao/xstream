@@ -14,6 +14,7 @@ import java.time.temporal.ValueRange;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
@@ -51,6 +52,8 @@ public class ValueRangeConverter implements Converter {
 
     @Override
     public void marshal(final Object source, final HierarchicalStreamWriter writer, final MarshallingContext context) {
+    	if (IgnoreTypes.ignore(source))
+			return;
         final ValueRange valueRange = (ValueRange)source;
         write("maxLargest", valueRange.getMaximum(), writer);
         write("maxSmallest", valueRange.getSmallestMaximum(), writer);

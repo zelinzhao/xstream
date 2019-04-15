@@ -11,6 +11,7 @@
  */
 package com.thoughtworks.xstream.converters.collections;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.converters.reflection.ObjectAccessException;
@@ -54,6 +55,8 @@ public class TreeMapConverter extends MapConverter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
+    	if (IgnoreTypes.ignore(source))
+			return;
         SortedMap sortedMap = (SortedMap) source;
         marshalComparator(sortedMap.comparator(), writer, context);
         super.marshal(source, writer, context);

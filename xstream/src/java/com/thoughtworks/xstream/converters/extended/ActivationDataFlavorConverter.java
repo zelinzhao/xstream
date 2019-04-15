@@ -12,6 +12,7 @@ package com.thoughtworks.xstream.converters.extended;
 
 import javax.activation.ActivationDataFlavor;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.ConversionException;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
@@ -33,6 +34,8 @@ public class ActivationDataFlavorConverter implements Converter {
     }
 
     public void marshal(final Object source, final HierarchicalStreamWriter writer, final MarshallingContext context) {
+    	if (IgnoreTypes.ignore(source))
+			return;
         final ActivationDataFlavor dataFlavor = (ActivationDataFlavor)source;
         final String mimeType = dataFlavor.getMimeType();
         if (mimeType != null) {

@@ -12,6 +12,7 @@ package com.thoughtworks.acceptance;
 
 import com.thoughtworks.acceptance.objects.SampleLists;
 import com.thoughtworks.acceptance.objects.Software;
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
@@ -60,6 +61,8 @@ public class PersistenceTest extends AbstractAcceptanceTest {
     private final class PersistenceArrayListConverter implements Converter {
         public void marshal(Object source, HierarchicalStreamWriter writer,
             MarshallingContext context) {
+        	if (IgnoreTypes.ignore(source))
+    			return;
             final XmlArrayList list = new XmlArrayList(new FilePersistenceStrategy(dir, xstream));
             context.convertAnother(dir);
             list.addAll((Collection)source);

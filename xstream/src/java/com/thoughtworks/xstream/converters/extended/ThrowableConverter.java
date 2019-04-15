@@ -11,6 +11,7 @@
  */
 package com.thoughtworks.xstream.converters.extended;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.ConverterLookup;
 import com.thoughtworks.xstream.converters.MarshallingContext;
@@ -50,6 +51,8 @@ public class ThrowableConverter implements Converter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
+    	if (IgnoreTypes.ignore(source))
+			return;
         Throwable throwable = (Throwable) source;
         if (throwable.getCause() == null) {
             try {

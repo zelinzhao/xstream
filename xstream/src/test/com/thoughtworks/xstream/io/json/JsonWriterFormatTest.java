@@ -26,6 +26,7 @@ import com.thoughtworks.acceptance.someobjects.Handler;
 import com.thoughtworks.acceptance.someobjects.Protocol;
 import com.thoughtworks.acceptance.someobjects.X;
 import com.thoughtworks.acceptance.someobjects.Y;
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
@@ -71,6 +72,8 @@ public class JsonWriterFormatTest extends TestCase {
         }
     
         public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
+        	if (IgnoreTypes.ignore(source))
+    			return;
             Handler h = (Handler)source;
             writer.startNode("str");
             writer.setValue("test");

@@ -14,6 +14,7 @@ package com.thoughtworks.xstream.converters.javabean;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.ConversionException;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
@@ -83,6 +84,8 @@ public class JavaBeanConverter implements Converter {
     }
 
     public void marshal(final Object source, final HierarchicalStreamWriter writer, final MarshallingContext context) {
+    	if (IgnoreTypes.ignore(source))
+			return;
         final String classAttributeName = mapper.aliasForSystemAttribute("class");
         beanProvider.visitSerializableProperties(source, new JavaBeanProvider.Visitor() {
             public boolean shouldVisit(String name, Class definedIn) {

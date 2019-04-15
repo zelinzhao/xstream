@@ -19,6 +19,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.ConversionException;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.ConverterLookup;
@@ -131,6 +132,8 @@ public class ToAttributedValueConverter implements Converter {
 
     public void marshal(final Object source, final HierarchicalStreamWriter writer,
         final MarshallingContext context) {
+    	if (IgnoreTypes.ignore(source))
+			return;
         final Class sourceType = source.getClass();
         final Map defaultFieldDefinition = new HashMap();
         final String[] tagValue = new String[1];

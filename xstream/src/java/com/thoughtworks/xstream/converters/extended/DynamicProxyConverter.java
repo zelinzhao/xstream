@@ -11,6 +11,7 @@
  */
 package com.thoughtworks.xstream.converters.extended;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.ConversionException;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
@@ -76,6 +77,8 @@ public class DynamicProxyConverter implements Converter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
+    	if (IgnoreTypes.ignore(source))
+			return;
         InvocationHandler invocationHandler = Proxy.getInvocationHandler(source);
         addInterfacesToXml(source, writer);
         writer.startNode("handler");

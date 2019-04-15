@@ -11,6 +11,7 @@
  */
 package com.thoughtworks.xstream.converters.extended;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.SingleValueConverter;
@@ -66,6 +67,8 @@ public class FontConverter implements Converter {
 
     public void marshal(Object source, HierarchicalStreamWriter writer,
         MarshallingContext context) {
+    	if (IgnoreTypes.ignore(source))
+			return;
         Font font = (Font)source;
         Map attributes = font.getAttributes();
         if (mapper != null) {

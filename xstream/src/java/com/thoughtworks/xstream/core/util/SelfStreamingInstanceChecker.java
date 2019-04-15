@@ -11,6 +11,7 @@
  */
 package com.thoughtworks.xstream.core.util;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.ConversionException;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.ConverterLookup;
@@ -55,6 +56,8 @@ public class SelfStreamingInstanceChecker implements Converter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
+    	if (IgnoreTypes.ignore(source))
+			return;
         if (source == self) {
             throw new ConversionException("Cannot marshal the XStream instance in action");
         }

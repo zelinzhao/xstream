@@ -11,6 +11,7 @@
  */
 package com.thoughtworks.acceptance;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.DataHolder;
 import com.thoughtworks.xstream.converters.MarshallingContext;
@@ -32,6 +33,8 @@ public class DataHolderTest extends AbstractAcceptanceTest {
         }
 
         public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
+        	if (IgnoreTypes.ignore(source))
+    			return;
             String prefix = (String) context.get("prefix");
             if (prefix != null) {
                 writer.addAttribute("prefix", prefix);

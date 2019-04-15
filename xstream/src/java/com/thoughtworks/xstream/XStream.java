@@ -2553,6 +2553,8 @@ public class XStream {
 
         public void marshal(final Object source, final HierarchicalStreamWriter writer,
                 final MarshallingContext context) {
+        	if (IgnoreTypes.ignore(source))
+    			return;
             throw new ConversionException("Security alert. Marshalling rejected.");
         }
 

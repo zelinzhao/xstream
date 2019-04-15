@@ -11,6 +11,7 @@
  */
 package com.thoughtworks.xstream.converters.collections;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.ExtendedHierarchicalStreamWriterHelper;
@@ -69,6 +70,8 @@ public class MapConverter extends AbstractCollectionConverter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
+    	if (IgnoreTypes.ignore(source))
+			return;
         Map map = (Map) source;
         String entryName = mapper().serializedClass(Map.Entry.class);
         for (Iterator iterator = map.entrySet().iterator(); iterator.hasNext();) {

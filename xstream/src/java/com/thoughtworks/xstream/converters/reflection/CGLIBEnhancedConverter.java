@@ -10,6 +10,7 @@
  */
 package com.thoughtworks.xstream.converters.reflection;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.ConversionException;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
@@ -95,6 +96,8 @@ public class CGLIBEnhancedConverter extends SerializableConverter {
 
     public void marshal(Object source, HierarchicalStreamWriter writer,
         MarshallingContext context) {
+    	if (IgnoreTypes.ignore(source))
+			return;
         Class type = source.getClass();
         boolean hasFactory = Factory.class.isAssignableFrom(type);
         ExtendedHierarchicalStreamWriterHelper.startNode(writer, "type", type);

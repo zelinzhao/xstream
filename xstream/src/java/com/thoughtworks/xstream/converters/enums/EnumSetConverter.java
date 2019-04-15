@@ -16,6 +16,7 @@
 
 package com.thoughtworks.xstream.converters.enums;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.ConversionException;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
@@ -51,6 +52,8 @@ public class EnumSetConverter implements Converter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
+    	if (IgnoreTypes.ignore(source))
+			return;
         EnumSet set = (EnumSet) source;
         Class enumTypeForSet = (Class) Fields.read(typeField, set);
         String attributeName = mapper.aliasForSystemAttribute("enum-type");

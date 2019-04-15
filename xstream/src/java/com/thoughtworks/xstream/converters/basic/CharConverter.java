@@ -11,6 +11,7 @@
  */
 package com.thoughtworks.xstream.converters.basic;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.SingleValueConverter;
@@ -32,6 +33,8 @@ public class CharConverter implements Converter, SingleValueConverter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
+    	if (IgnoreTypes.ignore(source))
+			return;
         writer.setValue(toString(source));
     }
 
