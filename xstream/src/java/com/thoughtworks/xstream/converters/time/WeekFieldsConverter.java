@@ -51,10 +51,6 @@ public class WeekFieldsConverter implements Converter {
 
     @Override
     public void marshal(final Object source, final HierarchicalStreamWriter writer, final MarshallingContext context) {
-    	if (IgnoreTypes.ignore(source)) {
-			writer.ignoreNode();
-			return;
-		}
         final WeekFields weekFields = (WeekFields)source;
         ExtendedHierarchicalStreamWriterHelper.startNode(writer, mapper.serializedMember(WeekFields.class,
             "minimalDays"), int.class);

@@ -72,10 +72,6 @@ public class JsonWriterFormatTest extends TestCase {
         }
     
         public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
-        	if (IgnoreTypes.ignore(source)) {
-    			writer.ignoreNode();
-    			return;
-    		}
             Handler h = (Handler)source;
             writer.startNode("str");
             writer.setValue("test");

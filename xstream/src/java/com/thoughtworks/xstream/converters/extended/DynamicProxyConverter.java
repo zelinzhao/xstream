@@ -77,10 +77,6 @@ public class DynamicProxyConverter implements Converter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
-    	if (IgnoreTypes.ignore(source)) {
-			writer.ignoreNode();
-			return;
-		}
         InvocationHandler invocationHandler = Proxy.getInvocationHandler(source);
         addInterfacesToXml(source, writer);
         writer.startNode("handler");

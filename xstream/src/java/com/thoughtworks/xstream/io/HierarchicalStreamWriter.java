@@ -27,8 +27,6 @@ public interface HierarchicalStreamWriter {
 
     void endNode();
     
-    void ignoreNode();
-
     /**
      * Flush the writer, if necessary.
      */

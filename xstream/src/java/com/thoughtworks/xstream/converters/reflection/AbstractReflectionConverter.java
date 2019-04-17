@@ -76,10 +76,6 @@ public abstract class AbstractReflectionConverter implements Converter, Caching 
 
     public void marshal(Object original, final HierarchicalStreamWriter writer,
         final MarshallingContext context) {
-    	if (IgnoreTypes.ignore(original)) {
-			writer.ignoreNode();
-			return;
-		}
         final Object source = serializationMembers.callWriteReplace(original);
 
         if (source != original && context instanceof ReferencingMarshallingContext) {

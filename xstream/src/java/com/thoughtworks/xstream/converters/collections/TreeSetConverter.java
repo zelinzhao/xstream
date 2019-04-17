@@ -83,10 +83,6 @@ public class TreeSetConverter extends CollectionConverter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
-    	if (IgnoreTypes.ignore(source)) {
-			writer.ignoreNode();
-			return;
-		}
         SortedSet sortedSet = (SortedSet) source;
         treeMapConverter.marshalComparator(sortedSet.comparator(), writer, context);
         super.marshal(source, writer, context);

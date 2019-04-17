@@ -49,10 +49,6 @@ public class LambdaConverter extends SerializableConverter {
 
     @Override
     public void marshal(final Object original, final HierarchicalStreamWriter writer, final MarshallingContext context) {
-    	if (IgnoreTypes.ignore(original)) {
-			writer.ignoreNode();
-			return;
-		}
         if (original instanceof Serializable) {
             super.marshal(original, writer, context);
         }

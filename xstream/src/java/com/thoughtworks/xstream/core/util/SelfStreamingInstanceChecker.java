@@ -56,10 +56,6 @@ public class SelfStreamingInstanceChecker implements Converter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
-    	if (IgnoreTypes.ignore(source)) {
-			writer.ignoreNode();
-			return;
-		}
         if (source == self) {
             throw new ConversionException("Cannot marshal the XStream instance in action");
         }

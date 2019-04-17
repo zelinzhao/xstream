@@ -62,7 +62,7 @@ public class IgnoreTypes {
 	}
 	public static boolean ignore(Object obj) {
 		if(obj==null)
-			return true;
+			return false;
 		return ignore(obj.getClass());
 	}
 }

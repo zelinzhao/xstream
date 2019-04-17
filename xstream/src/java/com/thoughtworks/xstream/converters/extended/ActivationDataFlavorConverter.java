@@ -34,10 +34,6 @@ public class ActivationDataFlavorConverter implements Converter {
     }
 
     public void marshal(final Object source, final HierarchicalStreamWriter writer, final MarshallingContext context) {
-    	if (IgnoreTypes.ignore(source)) {
-			writer.ignoreNode();
-			return;
-		}
         final ActivationDataFlavor dataFlavor = (ActivationDataFlavor)source;
         final String mimeType = dataFlavor.getMimeType();
         if (mimeType != null) {

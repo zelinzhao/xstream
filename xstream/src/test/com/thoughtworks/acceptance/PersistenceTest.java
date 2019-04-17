@@ -61,10 +61,6 @@ public class PersistenceTest extends AbstractAcceptanceTest {
     private final class PersistenceArrayListConverter implements Converter {
         public void marshal(Object source, HierarchicalStreamWriter writer,
             MarshallingContext context) {
-        	if (IgnoreTypes.ignore(source)) {
-    			writer.ignoreNode();
-    			return;
-    		}
             final XmlArrayList list = new XmlArrayList(new FilePersistenceStrategy(dir, xstream));
             context.convertAnother(dir);
             list.addAll((Collection)source);

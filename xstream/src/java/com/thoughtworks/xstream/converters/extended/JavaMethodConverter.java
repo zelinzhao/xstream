@@ -66,10 +66,6 @@ public class JavaMethodConverter implements Converter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
-    	if (IgnoreTypes.ignore(source)) {
-			writer.ignoreNode();
-			return;
-		}
         if (source instanceof Method) {
             Method method = (Method) source;
             String declaringClassName = javaClassConverter.toString(method.getDeclaringClass());

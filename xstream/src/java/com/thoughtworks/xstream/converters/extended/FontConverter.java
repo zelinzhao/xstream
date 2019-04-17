@@ -67,10 +67,6 @@ public class FontConverter implements Converter {
 
     public void marshal(Object source, HierarchicalStreamWriter writer,
         MarshallingContext context) {
-    	if (IgnoreTypes.ignore(source)) {
-			writer.ignoreNode();
-			return;
-		}
         Font font = (Font)source;
         Map attributes = font.getAttributes();
         if (mapper != null) {

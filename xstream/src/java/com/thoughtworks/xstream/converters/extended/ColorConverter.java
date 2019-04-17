@@ -38,10 +38,6 @@ public class ColorConverter implements Converter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
-    	if (IgnoreTypes.ignore(source)) {
-			writer.ignoreNode();
-			return;
-		}
         Color color = (Color) source;
         write("red", color.getRed(), writer);
         write("green", color.getGreen(), writer);

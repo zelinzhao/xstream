@@ -96,10 +96,6 @@ public class CGLIBEnhancedConverter extends SerializableConverter {
 
     public void marshal(Object source, HierarchicalStreamWriter writer,
         MarshallingContext context) {
-    	if (IgnoreTypes.ignore(source)) {
-			writer.ignoreNode();
-			return;
-		}
         Class type = source.getClass();
         boolean hasFactory = Factory.class.isAssignableFrom(type);
         ExtendedHierarchicalStreamWriterHelper.startNode(writer, "type", type);

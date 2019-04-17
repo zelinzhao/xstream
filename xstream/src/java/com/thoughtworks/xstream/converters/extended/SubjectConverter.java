@@ -44,10 +44,6 @@ public class SubjectConverter extends AbstractCollectionConverter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
-    	if (IgnoreTypes.ignore(source)) {
-			writer.ignoreNode();
-			return;
-		}
         Subject subject = (Subject) source;
         marshalPrincipals(subject.getPrincipals(), writer, context);
         marshalPublicCredentials(subject.getPublicCredentials(), writer, context);

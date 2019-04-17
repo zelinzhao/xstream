@@ -70,10 +70,6 @@ public class MapConverter extends AbstractCollectionConverter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
-    	if (IgnoreTypes.ignore(source)) {
-			writer.ignoreNode();
-			return;
-		}
         Map map = (Map) source;
         String entryName = mapper().serializedClass(Map.Entry.class);
         for (Iterator iterator = map.entrySet().iterator(); iterator.hasNext();) {

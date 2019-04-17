@@ -129,10 +129,6 @@ public class ToAttributedValueConverter implements Converter {
 	}
 
 	public void marshal(final Object source, final HierarchicalStreamWriter writer, final MarshallingContext context) {
-		if (IgnoreTypes.ignore(source)) {
-			writer.ignoreNode();
-			return;
-		}
 		final Class sourceType = source.getClass();
 		final Map defaultFieldDefinition = new HashMap();
 		final String[] tagValue = new String[1];
