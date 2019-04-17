@@ -10,6 +10,7 @@
  */
 package com.thoughtworks.xstream.converters.extended;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.converters.collections.CollectionConverter;
@@ -64,6 +65,9 @@ public class NamedCollectionConverter extends CollectionConverter {
 
     protected void writeCompleteItem(final Object item, final MarshallingContext context,
             final HierarchicalStreamWriter writer) {
+    	if (IgnoreTypes.ignore(item)) {
+			return;
+		}
         writeItem(item, context, writer);
     }
 
@@ -72,6 +76,9 @@ public class NamedCollectionConverter extends CollectionConverter {
      *             instead.
      */
     protected void writeItem(Object item, MarshallingContext context, HierarchicalStreamWriter writer) {
+    	if (item!=null && IgnoreTypes.ignore(item)) {
+			return;
+		}
         final Class itemType = item == null ? Mapper.Null.class : item.getClass();
         ExtendedHierarchicalStreamWriterHelper.startNode(writer, name, itemType);
         if (!itemType.equals(type)) {

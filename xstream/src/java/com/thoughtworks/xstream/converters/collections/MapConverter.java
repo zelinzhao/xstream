@@ -78,12 +78,12 @@ public class MapConverter extends AbstractCollectionConverter {
         String entryName = mapper().serializedClass(Map.Entry.class);
         for (Iterator iterator = map.entrySet().iterator(); iterator.hasNext();) {
             Map.Entry entry = (Map.Entry) iterator.next();
-            ExtendedHierarchicalStreamWriterHelper.startNode(writer, entryName, entry.getClass());
-
-            writeCompleteItem(entry.getKey(), context, writer);
-            writeCompleteItem(entry.getValue(), context, writer);
-
-            writer.endNode();
+        	if (!IgnoreTypes.ignore(entry.getKey()) && !IgnoreTypes.ignore(entry.getValue())) {
+        		ExtendedHierarchicalStreamWriterHelper.startNode(writer, entryName, entry.getClass());
+                writeCompleteItem(entry.getKey(), context, writer);
+                writeCompleteItem(entry.getValue(), context, writer);
+                writer.endNode();
+    		}
         }
     }
 

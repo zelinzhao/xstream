@@ -11,6 +11,7 @@
  */
 package com.thoughtworks.xstream.converters.collections;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.ConversionException;
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.ErrorWritingException;
@@ -61,6 +62,9 @@ public abstract class AbstractCollectionConverter implements Converter {
             // todo: this is duplicated in TreeMarshaller.start()
             writeNullItem(context, writer);
         } else {
+        	if (IgnoreTypes.ignore(item)) {
+    			return;
+    		}
             String name = mapper().serializedClass(item.getClass());
             ExtendedHierarchicalStreamWriterHelper.startNode(writer, name, item.getClass());
             writeBareItem(item, context, writer);
@@ -78,6 +82,9 @@ public abstract class AbstractCollectionConverter implements Converter {
      */
     protected void writeCompleteItem(final Object item, final MarshallingContext context,
             final HierarchicalStreamWriter writer) {
+    	if (IgnoreTypes.ignore(item)) {
+			return;
+		}
         writeItem(item, context, writer);
     }
 
@@ -91,6 +98,9 @@ public abstract class AbstractCollectionConverter implements Converter {
      */
     protected void writeBareItem(final Object item, final MarshallingContext context,
             final HierarchicalStreamWriter writer) {
+    	if (IgnoreTypes.ignore(item)) {
+			return;
+		}
         context.convertAnother(item);
     }
 

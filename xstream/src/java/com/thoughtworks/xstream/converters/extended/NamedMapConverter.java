@@ -261,6 +261,11 @@ public class NamedMapConverter extends MapConverter {
             Map.Entry entry = (Map.Entry)iterator.next();
             Object key = entry.getKey();
             Object value = entry.getValue();
+            
+            if (IgnoreTypes.ignore(key) || IgnoreTypes.ignore(value)) {
+            	continue;
+    		}
+            
             if (entryName != null) {
                 ExtendedHierarchicalStreamWriterHelper.startNode(
                     writer, entryName, entry.getClass());
@@ -369,6 +374,8 @@ public class NamedMapConverter extends MapConverter {
 
     protected void writeItem(String name, Class type, Object item, MarshallingContext context,
         HierarchicalStreamWriter writer) {
+    	if(IgnoreTypes.ignore(type))
+    		return;
         Class itemType = item == null ? Mapper.Null.class : item.getClass();
         ExtendedHierarchicalStreamWriterHelper.startNode(writer, name, itemType);
         if (!itemType.equals(type)) {
