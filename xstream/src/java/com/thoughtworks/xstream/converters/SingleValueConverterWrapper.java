@@ -44,8 +44,10 @@ public class SingleValueConverterWrapper implements Converter, SingleValueConver
 	}
 
 	public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
-		if (IgnoreTypes.ignore(source))
+		if (IgnoreTypes.ignore(source)) {
+			writer.ignoreNode();
 			return;
+		}
 		writer.setValue(toString(source));
 	}
 

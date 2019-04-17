@@ -40,8 +40,10 @@ public class ArrayConverter extends AbstractCollectionConverter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
-    	if (IgnoreTypes.ignore(source))
+    	if (IgnoreTypes.ignore(source)) {
+			writer.ignoreNode();
 			return;
+		}
         int length = Array.getLength(source);
         for (int i = 0; i < length; i++) {
             final Object item = Array.get(source, i);

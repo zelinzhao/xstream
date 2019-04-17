@@ -51,8 +51,10 @@ public class ThrowableConverter implements Converter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
-    	if (IgnoreTypes.ignore(source))
+    	if (IgnoreTypes.ignore(source)) {
+			writer.ignoreNode();
 			return;
+		}
         Throwable throwable = (Throwable) source;
         if (throwable.getCause() == null) {
             try {

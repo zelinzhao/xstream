@@ -61,8 +61,10 @@ public class PropertiesConverter implements Converter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
-    	if (IgnoreTypes.ignore(source))
+    	if (IgnoreTypes.ignore(source)) {
+			writer.ignoreNode();
 			return;
+		}
         final Properties properties = (Properties) source;
         Map map = sort ? (Map)new TreeMap(properties) : (Map)properties;
         for (Iterator iterator = map.entrySet().iterator(); iterator.hasNext();) {

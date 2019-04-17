@@ -244,8 +244,10 @@ public class NamedMapConverter extends MapConverter {
 
     public void marshal(Object source, HierarchicalStreamWriter writer,
         MarshallingContext context) {
-    	if (IgnoreTypes.ignore(source))
+    	if (IgnoreTypes.ignore(source)) {
+			writer.ignoreNode();
 			return;
+		}
         Map map = (Map)source;
         SingleValueConverter keyConverter = null;
         SingleValueConverter valueConverter = null;

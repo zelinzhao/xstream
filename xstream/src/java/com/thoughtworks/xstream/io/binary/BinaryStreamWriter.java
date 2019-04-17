@@ -53,7 +53,10 @@ public class BinaryStreamWriter implements ExtendedHierarchicalStreamWriter {
     public void endNode() {
         write(new Token.EndNode());
     }
-
+    public void ignoreNode() {
+    	//TODO: implement this
+    	System.out.println("Empty ignoreNode method");
+    }
     public void flush() {
         try {
             out.flush();

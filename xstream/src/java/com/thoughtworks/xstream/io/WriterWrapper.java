@@ -36,6 +36,9 @@ public abstract class WriterWrapper implements ExtendedHierarchicalStreamWriter 
     public void endNode() {
         wrapped.endNode();
     }
+    public void ignoreNode() {
+    	wrapped.ignoreNode();
+    }
 
     public void addAttribute(String key, String value) {
         wrapped.addAttribute(key, value);

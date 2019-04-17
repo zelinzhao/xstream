@@ -45,8 +45,10 @@ public class RegexPatternConverter implements Converter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
-    	if (IgnoreTypes.ignore(source))
+    	if (IgnoreTypes.ignore(source)) {
+			writer.ignoreNode();
 			return;
+		}
         Pattern pattern = (Pattern)source;
         writer.startNode("pattern");
         writer.setValue(pattern.pattern());

@@ -76,8 +76,10 @@ public abstract class AbstractReflectionConverter implements Converter, Caching 
 
     public void marshal(Object original, final HierarchicalStreamWriter writer,
         final MarshallingContext context) {
-    	if (IgnoreTypes.ignore(original))
+    	if (IgnoreTypes.ignore(original)) {
+			writer.ignoreNode();
 			return;
+		}
         final Object source = serializationMembers.callWriteReplace(original);
 
         if (source != original && context instanceof ReferencingMarshallingContext) {
@@ -105,6 +107,9 @@ public abstract class AbstractReflectionConverter implements Converter, Caching 
             final Set writtenAttributes = new HashSet();
 
             public void visit(String fieldName, Class type, Class definedIn, Object value) {
+            	if (IgnoreTypes.ignore(type)) {
+        			return;
+        		}
                 if (!mapper.shouldSerializeMember(definedIn, fieldName)) {
                     return;
                 }
@@ -147,6 +152,9 @@ public abstract class AbstractReflectionConverter implements Converter, Caching 
         final FieldMarshaller fieldMarshaller = new FieldMarshaller() {
             public void writeField(String fieldName, String aliasName, Class fieldType,
                 Class definedIn, Object newObj) {
+            	if (IgnoreTypes.ignore(fieldType)) {
+        			return;
+        		}
                 Class actualType = newObj != null ? newObj.getClass() : fieldType;
                 ExtendedHierarchicalStreamWriterHelper.startNode(writer, aliasName != null
                     ? aliasName
@@ -180,6 +188,9 @@ public abstract class AbstractReflectionConverter implements Converter, Caching 
             }
 
             public void writeItem(Object item) {
+            	if (IgnoreTypes.ignore(item)) {
+        			return;
+        		}
                 if (item == null) {
                     String name = mapper.serializedClass(null);
                     ExtendedHierarchicalStreamWriterHelper.startNode(

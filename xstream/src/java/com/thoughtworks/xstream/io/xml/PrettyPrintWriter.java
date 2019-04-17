@@ -64,6 +64,8 @@ public class PrettyPrintWriter extends AbstractXmlWriter {
     private boolean readyForNewLine;
     private boolean tagIsEmpty;
     private String newLine;
+    
+    private boolean ignoreNode=false;
 
     private static final char[] NULL = "&#x0;".toCharArray();
     private static final char[] AMP = "&amp;".toCharArray();
@@ -317,10 +319,19 @@ public class PrettyPrintWriter extends AbstractXmlWriter {
             writer.write((String)elementStack.pop());
             writer.write('>');
         }
+        if(ignoreNode) {
+        	writer.ignoreNode();
+        	ignoreNode=false;
+        }
         readyForNewLine = true;
         if (depth == 0) {
             writer.flush();
         }
+    }
+    
+    @Override
+    public void ignoreNode() {
+    	ignoreNode=true;
     }
 
     private void finishTag() {

@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 import com.thoughtworks.xstream.converters.ConversionException;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
@@ -477,6 +478,9 @@ public class SerializableConverter extends AbstractReflectionConverter {
         public void visitSerializableFields(final Object object, final Visitor visitor) {
             wrapped.visitSerializableFields(object, new Visitor() {
                 public void visit(String name, Class type, Class definedIn, Object value) {
+                  	if (IgnoreTypes.ignore(type)) {
+            			return;
+            		}
                     if (!Serializable.class.isAssignableFrom(definedIn)) {
                         visitor.visit(name, type, definedIn, value);
                     }

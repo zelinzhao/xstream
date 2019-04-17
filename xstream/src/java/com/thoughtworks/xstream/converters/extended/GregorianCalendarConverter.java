@@ -37,8 +37,10 @@ public class GregorianCalendarConverter implements Converter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
-    	if (IgnoreTypes.ignore(source))
+    	if (IgnoreTypes.ignore(source)) {
+			writer.ignoreNode();
 			return;
+		}
         GregorianCalendar calendar = (GregorianCalendar) source;
         ExtendedHierarchicalStreamWriterHelper.startNode(writer, "time", long.class);
         long timeInMillis = calendar.getTime().getTime(); // calendar.getTimeInMillis() not available under JDK 1.3

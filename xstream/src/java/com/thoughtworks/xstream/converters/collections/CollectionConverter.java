@@ -69,8 +69,10 @@ public class CollectionConverter extends AbstractCollectionConverter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
-    	if (IgnoreTypes.ignore(source))
+    	if (IgnoreTypes.ignore(source)) {
+			writer.ignoreNode();
 			return;
+		}
         Collection collection = (Collection) source;
         for (Iterator iterator = collection.iterator(); iterator.hasNext();) {
             Object item = iterator.next();

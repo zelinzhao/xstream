@@ -86,7 +86,10 @@ public abstract class AbstractDocumentWriter extends AbstractXmlWriter implement
             result.add(node);
         }
     }
-
+    public void ignoreNode() {
+    	//TODO: implement this
+    	System.out.println("Empty ignoreNode method");
+    }
     /**
      * Called when a node ends. Hook for derived implementations.
      * 

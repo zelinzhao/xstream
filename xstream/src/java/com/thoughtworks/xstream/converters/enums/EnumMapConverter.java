@@ -49,8 +49,10 @@ public class EnumMapConverter extends MapConverter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
-    	if (IgnoreTypes.ignore(source))
+    	if (IgnoreTypes.ignore(source)) {
+			writer.ignoreNode();
 			return;
+		}
         Class type = (Class) Fields.read(typeField, source);
         String attributeName = mapper().aliasForSystemAttribute("enum-type");
         if (attributeName != null) {

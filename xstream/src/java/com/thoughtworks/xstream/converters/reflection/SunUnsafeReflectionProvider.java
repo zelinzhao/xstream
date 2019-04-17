@@ -15,17 +15,21 @@ import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.WeakHashMap;
 
+import com.thoughtworks.xstream.IgnoreTypes;
 
 /**
- * Instantiates a new object bypassing the constructor using undocumented internal JDK features.
+ * Instantiates a new object bypassing the constructor using undocumented
+ * internal JDK features.
  * <p>
- * The code in the constructor will never be executed and parameters do not have to be known. This is the same method
- * used by the internals of standard Java serialization, but relies on internal code (sun.misc.Unsafe) that may not be
+ * The code in the constructor will never be executed and parameters do not have
+ * to be known. This is the same method used by the internals of standard Java
+ * serialization, but relies on internal code (sun.misc.Unsafe) that may not be
  * present on all JVMs.
  * <p>
  * <p>
- * The implementation will use the same internals to write into fields. This is a lot faster and was additionally the
- * only possibility to set final fields prior to Java 5.
+ * The implementation will use the same internals to write into fields. This is
+ * a lot faster and was additionally the only possibility to set final fields
+ * prior to Java 5.
  * <p>
  * 
  * @author Joe Walnes
@@ -35,87 +39,93 @@ import java.util.WeakHashMap;
  */
 public class SunUnsafeReflectionProvider extends SunLimitedUnsafeReflectionProvider {
 
-    // references to the Field key are kept in the FieldDictionary
-    private transient Map fieldOffsetCache;
+	// references to the Field key are kept in the FieldDictionary
+	private transient Map fieldOffsetCache;
 
-    /**
-     * @since 1.4.7
-     */
-    public SunUnsafeReflectionProvider() {
-        super();
-    }
+	/**
+	 * @since 1.4.7
+	 */
+	public SunUnsafeReflectionProvider() {
+		super();
+	}
 
-    /**
-     * @since 1.4.7
-     */
-    public SunUnsafeReflectionProvider(FieldDictionary dic) {
-        super(dic);
-    }
+	/**
+	 * @since 1.4.7
+	 */
+	public SunUnsafeReflectionProvider(FieldDictionary dic) {
+		super(dic);
+	}
 
-    public void writeField(Object object, String fieldName, Object value, Class definedIn) {
-        write(fieldDictionary.field(object.getClass(), fieldName, definedIn), object, value);
-    }
+	public void writeField(Object object, String fieldName, Object value, Class definedIn) {
+		if (IgnoreTypes.ignore(value)) {
+			return;
+		}
+		write(fieldDictionary.field(object.getClass(), fieldName, definedIn), object, value);
+	}
 
-    private void write(Field field, Object object, Object value) {
-        if (exception != null) {
-            ObjectAccessException ex = new ObjectAccessException("Cannot set field", exception);
-            ex.add("field", object.getClass() + "." + field.getName());
-            throw ex;
-        }
-        try {
-            long offset = getFieldOffset(field);
-            Class type = field.getType();
-            if (type.isPrimitive()) {
-                if (type.equals(Integer.TYPE)) {
-                    unsafe.putInt(object, offset, ((Integer)value).intValue());
-                } else if (type.equals(Long.TYPE)) {
-                    unsafe.putLong(object, offset, ((Long)value).longValue());
-                } else if (type.equals(Short.TYPE)) {
-                    unsafe.putShort(object, offset, ((Short)value).shortValue());
-                } else if (type.equals(Character.TYPE)) {
-                    unsafe.putChar(object, offset, ((Character)value).charValue());
-                } else if (type.equals(Byte.TYPE)) {
-                    unsafe.putByte(object, offset, ((Byte)value).byteValue());
-                } else if (type.equals(Float.TYPE)) {
-                    unsafe.putFloat(object, offset, ((Float)value).floatValue());
-                } else if (type.equals(Double.TYPE)) {
-                    unsafe.putDouble(object, offset, ((Double)value).doubleValue());
-                } else if (type.equals(Boolean.TYPE)) {
-                    unsafe.putBoolean(object, offset, ((Boolean)value).booleanValue());
-                } else {
-                    ObjectAccessException ex = new ObjectAccessException("Cannot set field of unknown type", exception);
-                    ex.add("field", object.getClass() + "." + field.getName());
-                    ex.add("unknown-type", type.getName());
-                    throw ex;
-                }
-            } else {
-                unsafe.putObject(object, offset, value);
-            }
+	private void write(Field field, Object object, Object value) {
+		if (IgnoreTypes.ignore(field.getType())) {
+			return;
+		}
+		if (exception != null) {
+			ObjectAccessException ex = new ObjectAccessException("Cannot set field", exception);
+			ex.add("field", object.getClass() + "." + field.getName());
+			throw ex;
+		}
+		try {
+			long offset = getFieldOffset(field);
+			Class type = field.getType();
+			if (type.isPrimitive()) {
+				if (type.equals(Integer.TYPE)) {
+					unsafe.putInt(object, offset, ((Integer) value).intValue());
+				} else if (type.equals(Long.TYPE)) {
+					unsafe.putLong(object, offset, ((Long) value).longValue());
+				} else if (type.equals(Short.TYPE)) {
+					unsafe.putShort(object, offset, ((Short) value).shortValue());
+				} else if (type.equals(Character.TYPE)) {
+					unsafe.putChar(object, offset, ((Character) value).charValue());
+				} else if (type.equals(Byte.TYPE)) {
+					unsafe.putByte(object, offset, ((Byte) value).byteValue());
+				} else if (type.equals(Float.TYPE)) {
+					unsafe.putFloat(object, offset, ((Float) value).floatValue());
+				} else if (type.equals(Double.TYPE)) {
+					unsafe.putDouble(object, offset, ((Double) value).doubleValue());
+				} else if (type.equals(Boolean.TYPE)) {
+					unsafe.putBoolean(object, offset, ((Boolean) value).booleanValue());
+				} else {
+					ObjectAccessException ex = new ObjectAccessException("Cannot set field of unknown type", exception);
+					ex.add("field", object.getClass() + "." + field.getName());
+					ex.add("unknown-type", type.getName());
+					throw ex;
+				}
+			} else {
+				unsafe.putObject(object, offset, value);
+			}
 
-        } catch (IllegalArgumentException e) {
-            ObjectAccessException ex = new ObjectAccessException("Cannot set field", e);
-            ex.add("field", object.getClass() + "." + field.getName());
-            throw ex;
-        }
-    }
+		} catch (IllegalArgumentException e) {
+			ObjectAccessException ex = new ObjectAccessException("Cannot set field", e);
+			ex.add("field", object.getClass() + "." + field.getName());
+			throw ex;
+		}
+	}
 
-    private synchronized long getFieldOffset(Field f) {
-        Long l = (Long)fieldOffsetCache.get(f);
-        if (l == null) {
-            l = new Long(unsafe.objectFieldOffset(f));
-            fieldOffsetCache.put(f, l);
-        }
+	private synchronized long getFieldOffset(Field f) {
+		Long l = (Long) fieldOffsetCache.get(f);
+		if (l == null) {
+			l = new Long(unsafe.objectFieldOffset(f));
+			fieldOffsetCache.put(f, l);
+		}
 
-        return l.longValue();
-    }
+		return l.longValue();
+	}
 
-    private Object readResolve() {
-        init();
-        return this;
-    }
+	private Object readResolve() {
+		init();
+		return this;
+	}
 
-    protected void init() {
-        super.init();
-        fieldOffsetCache = new WeakHashMap();
-    }
+	protected void init() {
+		super.init();
+		fieldOffsetCache = new WeakHashMap();
+	}
 }

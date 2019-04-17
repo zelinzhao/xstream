@@ -31,8 +31,10 @@ public class CharArrayConverter implements Converter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
-    	if (IgnoreTypes.ignore(source))
+    	if (IgnoreTypes.ignore(source)) {
+			writer.ignoreNode();
 			return;
+		}
         char[] chars = (char[]) source;
         writer.setValue(new String(chars));
     }

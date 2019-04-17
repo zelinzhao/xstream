@@ -51,8 +51,10 @@ public class SystemClockConverter implements Converter {
 
     @Override
     public void marshal(final Object source, final HierarchicalStreamWriter writer, final MarshallingContext context) {
-    	if (IgnoreTypes.ignore(source))
+    	if (IgnoreTypes.ignore(source)) {
+			writer.ignoreNode();
 			return;
+		}
         final Clock clock = (Clock)source;
         ExtendedHierarchicalStreamWriterHelper.startNode(writer, mapper.serializedMember(Clock.class, "zone"), null);
         context.convertAnother(clock.getZone());

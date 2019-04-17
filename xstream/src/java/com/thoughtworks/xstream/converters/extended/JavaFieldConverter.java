@@ -66,8 +66,10 @@ public class JavaFieldConverter implements Converter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
-    	if (IgnoreTypes.ignore(source))
+    	if (IgnoreTypes.ignore(source)) {
+			writer.ignoreNode();
 			return;
+		}
         Field field = (Field) source;
         Class type = field.getDeclaringClass();
 

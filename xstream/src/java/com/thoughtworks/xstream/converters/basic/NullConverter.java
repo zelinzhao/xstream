@@ -32,8 +32,10 @@ public class NullConverter implements Converter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
-    	if (IgnoreTypes.ignore(source))
+    	if (IgnoreTypes.ignore(source)) {
+			writer.ignoreNode();
 			return;
+		}
         ExtendedHierarchicalStreamWriterHelper.startNode(writer, "null", Mapper.Null.class);
         writer.endNode();
     }

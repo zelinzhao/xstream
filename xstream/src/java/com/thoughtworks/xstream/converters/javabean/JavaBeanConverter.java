@@ -84,8 +84,10 @@ public class JavaBeanConverter implements Converter {
     }
 
     public void marshal(final Object source, final HierarchicalStreamWriter writer, final MarshallingContext context) {
-    	if (IgnoreTypes.ignore(source))
+    	if (IgnoreTypes.ignore(source)) {
+			writer.ignoreNode();
 			return;
+		}
         final String classAttributeName = mapper.aliasForSystemAttribute("class");
         beanProvider.visitSerializableProperties(source, new JavaBeanProvider.Visitor() {
             public boolean shouldVisit(String name, Class definedIn) {

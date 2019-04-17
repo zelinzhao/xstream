@@ -96,8 +96,10 @@ public class CGLIBEnhancedConverter extends SerializableConverter {
 
     public void marshal(Object source, HierarchicalStreamWriter writer,
         MarshallingContext context) {
-    	if (IgnoreTypes.ignore(source))
+    	if (IgnoreTypes.ignore(source)) {
+			writer.ignoreNode();
 			return;
+		}
         Class type = source.getClass();
         boolean hasFactory = Factory.class.isAssignableFrom(type);
         ExtendedHierarchicalStreamWriterHelper.startNode(writer, "type", type);
@@ -453,6 +455,9 @@ public class CGLIBEnhancedConverter extends SerializableConverter {
         public void visitSerializableFields(final Object object, final Visitor visitor) {
             wrapped.visitSerializableFields(object, new Visitor() {
                 public void visit(String name, Class type, Class definedIn, Object value) {
+                  	if (IgnoreTypes.ignore(type)) {
+            			return;
+            		}
                     if (!name.startsWith("CGLIB$")) {
                         visitor.visit(name, type, definedIn, value);
                     }

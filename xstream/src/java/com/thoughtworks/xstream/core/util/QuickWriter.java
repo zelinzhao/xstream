@@ -21,6 +21,8 @@ public class QuickWriter {
     private final Writer writer;
     private char[] buffer;
     private int pointer;
+    
+    private int preNewLine;
 
     public QuickWriter(Writer writer) {
         this(writer, 1024);
@@ -30,8 +32,16 @@ public class QuickWriter {
         this.writer = writer;
         buffer = new char[bufferSize];
     }
+    
+    public void ignoreNode() {
+    	System.out.println("[DSU] ignore node");
+    	pointer = preNewLine;
+    }
 
     public void write(String str) {
+    	if(str.equals("\n")) {
+    		preNewLine=pointer;
+    	}
         int len = str.length();
         if (pointer + len >= buffer.length) {
             flush();

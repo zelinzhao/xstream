@@ -33,8 +33,10 @@ public class DataHolderTest extends AbstractAcceptanceTest {
         }
 
         public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
-        	if (IgnoreTypes.ignore(source))
+        	if (IgnoreTypes.ignore(source)) {
+    			writer.ignoreNode();
     			return;
+    		}
             String prefix = (String) context.get("prefix");
             if (prefix != null) {
                 writer.addAttribute("prefix", prefix);

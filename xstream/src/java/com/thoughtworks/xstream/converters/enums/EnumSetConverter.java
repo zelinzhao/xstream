@@ -52,8 +52,10 @@ public class EnumSetConverter implements Converter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
-    	if (IgnoreTypes.ignore(source))
+    	if (IgnoreTypes.ignore(source)) {
+			writer.ignoreNode();
 			return;
+		}
         EnumSet set = (EnumSet) source;
         Class enumTypeForSet = (Class) Fields.read(typeField, set);
         String attributeName = mapper.aliasForSystemAttribute("enum-type");

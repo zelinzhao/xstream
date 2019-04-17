@@ -50,5 +50,8 @@ public abstract class AbstractXmlWriter extends AbstractWriter implements XmlFri
     public String escapeXmlName(String name) {
         return super.encodeNode(name);
     }
-
+    public void ignoreNode() {
+    	//TODO: implement this
+    	System.out.println("Empty ignoreNode method");
+    }
 }

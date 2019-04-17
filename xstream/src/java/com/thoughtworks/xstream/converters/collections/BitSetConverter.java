@@ -34,8 +34,10 @@ public class BitSetConverter implements Converter {
     }
 
     public void marshal(Object source, HierarchicalStreamWriter writer, MarshallingContext context) {
-    	if (IgnoreTypes.ignore(source))
+    	if (IgnoreTypes.ignore(source)) {
+			writer.ignoreNode();
 			return;
+		}
         BitSet bitSet = (BitSet) source;
         StringBuffer buffer = new StringBuffer();
         boolean seenFirst = false;
