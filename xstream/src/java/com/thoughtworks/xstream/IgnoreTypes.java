@@ -12,8 +12,11 @@ import java.util.regex.Pattern;
 public class IgnoreTypes {
 	private static HashSet<String> ignoreNames = new HashSet<String>();
 	private static List<Pattern> ignorePatterns = new ArrayList<Pattern>();
-	
+
+	private static HashSet<String> ignoredResult = new HashSet<>();
 	private static OutputStream log = new BufferedOutputStream(System.out);
+
+	private static int maxDepth = Integer.MAX_VALUE;
 
 	public static void addIgnoreName(String name) {
 		if (name != null)
@@ -38,31 +41,50 @@ public class IgnoreTypes {
 				addIgnorePattern(str);
 	}
 
-	public static boolean ignore(Class cla) {
-		String name1 = cla.getName();
-		String name2 = cla.getCanonicalName();
+	private static void write(String msg) {
 		try {
-			for (Pattern p : ignorePatterns) {
-				if ((name1 != null && p.matcher(name1).matches()) 
-						|| (name2 != null && p.matcher(name2).matches())) {
-					log.write(("[DSU] Omit type: " + name1 + "\n").getBytes());
-					log.flush();
-					return true;
-				}
-			}
-			if (ignoreNames.contains(name1) || ignoreNames.contains(name2)) {
-				log.write(("[DSU] Omit type: " + name1 + "\n").getBytes());
-				log.flush();
-				return true;
-			}
+			log.write(("[DSU] " + msg + "\n").getBytes());
+			log.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static void setMaxDepth(int max) {
+		if (max != 0)
+			maxDepth = max;
+		write("Max depth is " + maxDepth);
+	}
+
+	public static boolean ignore(Class cla, int depth) {
+		if (depth > maxDepth)
+			return true;
+		String name1 = cla.getName();
+		String name2 = cla.getCanonicalName();
+		for (Pattern p : ignorePatterns) {
+			if ((name1 != null && p.matcher(name1).matches()) || (name2 != null && p.matcher(name2).matches())) {
+				if (!ignoredResult.contains(name1)) {
+					write("Ignore type " + name1);
+					ignoredResult.add(name1);
+				}
+				return true;
+			}
+		}
+		if (ignoreNames.contains(name1) || ignoreNames.contains(name2)) {
+			if (!ignoredResult.contains(name1)) {
+				write("Ignore type " + name1);
+				ignoredResult.add(name1);
+			}
+			return true;
+		}
 		return false;
 	}
-	public static boolean ignore(Object obj) {
-		if(obj==null)
+
+	public static boolean ignore(Object obj, int depth) {
+		if (depth > maxDepth)
+			return true;
+		if (obj == null)
 			return false;
-		return ignore(obj.getClass());
+		return ignore(obj.getClass(), depth);
 	}
 }

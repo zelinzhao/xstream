@@ -58,9 +58,12 @@ public class PrettyPrintWriter extends AbstractXmlWriter {
     private final FastStack elementStack = new FastStack(16);
     private final char[] lineIndenter;
     private final int mode;
-
+    
     private boolean tagInProgress;
     protected int depth;
+    public int getDepth() {
+    	return depth;
+    }
     private boolean readyForNewLine;
     private boolean tagIsEmpty;
     private String newLine;

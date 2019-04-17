@@ -44,6 +44,9 @@ public class JsonWriter extends AbstractJsonWriter {
                 | Format.COMPACT_EMPTY_ELEMENT));
     }
 
+    public int getDepth() {
+    	return depth;
+    }
     /**
      * @deprecated As of 1.4 use {@link JsonWriter#JsonWriter(Writer, Format) instead}
      */

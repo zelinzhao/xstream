@@ -36,6 +36,9 @@ public class Dom4JXmlWriter extends AbstractXmlWriter {
         this(writer, new XmlFriendlyNameCoder());
     }
 
+    public int getDepth() {
+    	return 0;
+    }
     /**
      * @since 1.4
      */

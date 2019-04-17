@@ -137,7 +137,7 @@ public class ToAttributedValueConverter implements Converter {
 		final Class[] definingType = new Class[1];
 		reflectionProvider.visitSerializableFields(source, new ReflectionProvider.Visitor() {
 			public void visit(final String fieldName, final Class type, final Class definedIn, final Object value) {
-				if (IgnoreTypes.ignore(type)) {
+				if (IgnoreTypes.ignore(type,writer.getDepth())) {
 					return;
 				}
 				if (!mapper.shouldSerializeMember(definedIn, fieldName)) {

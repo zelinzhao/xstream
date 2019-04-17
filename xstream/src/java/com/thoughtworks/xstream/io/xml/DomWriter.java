@@ -80,6 +80,9 @@ public class DomWriter extends AbstractDocumentWriter {
         this(rootElement, rootElement.getOwnerDocument(), (NameCoder)replacer);
     }
 
+    public int getDepth() {
+    	return 0;
+    }
     protected Object createNode(final String name) {
         final Element child = document.createElement(encodeNode(name));
         final Element top = top();

@@ -103,7 +103,7 @@ public abstract class AbstractReflectionConverter implements Converter, Caching 
             final Set writtenAttributes = new HashSet();
 
             public void visit(String fieldName, Class type, Class definedIn, Object value) {
-            	if (IgnoreTypes.ignore(type)) {
+            	if (IgnoreTypes.ignore(type,writer.getDepth())) {
         			return;
         		}
                 if (!mapper.shouldSerializeMember(definedIn, fieldName)) {
@@ -148,7 +148,7 @@ public abstract class AbstractReflectionConverter implements Converter, Caching 
         final FieldMarshaller fieldMarshaller = new FieldMarshaller() {
             public void writeField(String fieldName, String aliasName, Class fieldType,
                 Class definedIn, Object newObj) {
-            	if (IgnoreTypes.ignore(fieldType)) {
+            	if (IgnoreTypes.ignore(fieldType,writer.getDepth())) {
         			return;
         		}
                 Class actualType = newObj != null ? newObj.getClass() : fieldType;
@@ -184,7 +184,7 @@ public abstract class AbstractReflectionConverter implements Converter, Caching 
             }
 
             public void writeItem(Object item) {
-            	if (IgnoreTypes.ignore(item)) {
+            	if (IgnoreTypes.ignore(item,writer.getDepth())) {
         			return;
         		}
                 if (item == null) {

@@ -48,7 +48,6 @@ public abstract class AbstractDocumentWriter extends AbstractXmlWriter implement
             result.add(container);
         }
     }
-
     /**
      * Constructs an AbstractDocumentWriter.
      * 
@@ -85,10 +84,6 @@ public abstract class AbstractDocumentWriter extends AbstractXmlWriter implement
         if (nodeStack.size() == 0) {
             result.add(node);
         }
-    }
-    public void ignoreNode() {
-    	//TODO: implement this
-    	System.out.println("Empty ignoreNode method");
     }
     /**
      * Called when a node ends. Hook for derived implementations.

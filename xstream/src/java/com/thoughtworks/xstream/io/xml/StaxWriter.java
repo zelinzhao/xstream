@@ -122,6 +122,9 @@ public class StaxWriter extends AbstractXmlWriter {
         }
     }
 
+    public int getDepth() {
+    	return tagDepth;
+    }
     /**
      * Call this method when you're finished with me
      */

@@ -27,6 +27,8 @@ public interface HierarchicalStreamWriter {
 
     void endNode();
     
+    int getDepth();
+    
     /**
      * Flush the writer, if necessary.
      */

@@ -41,6 +41,9 @@ public class JDom2Writer extends AbstractDocumentWriter {
         this(container, factory, new XmlFriendlyNameCoder());
     }
 
+    public int getDepth() {
+    	return 0;
+    }
     /**
      * @since 1.4.5
      */

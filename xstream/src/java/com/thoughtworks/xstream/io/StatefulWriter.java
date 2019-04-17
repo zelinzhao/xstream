@@ -30,7 +30,7 @@ import java.util.Set;
 public class StatefulWriter extends WriterWrapper {
 
     /**
-     * <code>STATE_OPEN</code> is the initial value of the writer.
+     * <code>STATE_OPEN</code> is the initial value of the writeTr.
      * 
      * @since 1.2
      */

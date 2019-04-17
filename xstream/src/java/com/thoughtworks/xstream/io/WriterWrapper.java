@@ -23,7 +23,9 @@ public abstract class WriterWrapper implements ExtendedHierarchicalStreamWriter 
     protected WriterWrapper(HierarchicalStreamWriter wrapped) {
         this.wrapped = wrapped;
     }
-
+    public int getDepth() {
+    	return wrapped.getDepth();
+    }
     public void startNode(String name) {
         wrapped.startNode(name);
     }

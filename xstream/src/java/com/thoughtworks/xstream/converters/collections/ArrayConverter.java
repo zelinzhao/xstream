@@ -43,7 +43,7 @@ public class ArrayConverter extends AbstractCollectionConverter {
         int length = Array.getLength(source);
         for (int i = 0; i < length; i++) {
             final Object item = Array.get(source, i);
-        	if (IgnoreTypes.ignore(item)) {
+        	if (IgnoreTypes.ignore(item,writer.getDepth())) {
     			continue;
     		}
             writeCompleteItem(item, context, writer);

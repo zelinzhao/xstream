@@ -37,6 +37,9 @@ public class XomWriter extends AbstractDocumentWriter {
         super(parentElement, nameCoder);
     }
 
+    public int getDepth() {
+    	return 0;
+    }
     /**
      * @since 1.2
      * @deprecated As of 1.4 use {@link XomWriter#XomWriter(Element, NameCoder)} instead

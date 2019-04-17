@@ -21,6 +21,9 @@ public class QuickWriter {
     private final Writer writer;
     private char[] buffer;
     private int pointer;
+    public String toString() {
+    	return String.valueOf(buffer);
+    }
     
     public QuickWriter(Writer writer) {
         this(writer, 1024);

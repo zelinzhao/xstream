@@ -65,7 +65,7 @@ public class NamedCollectionConverter extends CollectionConverter {
 
     protected void writeCompleteItem(final Object item, final MarshallingContext context,
             final HierarchicalStreamWriter writer) {
-    	if (IgnoreTypes.ignore(item)) {
+    	if (IgnoreTypes.ignore(item,writer.getDepth())) {
 			return;
 		}
         writeItem(item, context, writer);
@@ -76,7 +76,7 @@ public class NamedCollectionConverter extends CollectionConverter {
      *             instead.
      */
     protected void writeItem(Object item, MarshallingContext context, HierarchicalStreamWriter writer) {
-    	if (item!=null && IgnoreTypes.ignore(item)) {
+    	if (item!=null && IgnoreTypes.ignore(item,writer.getDepth())) {
 			return;
 		}
         final Class itemType = item == null ? Mapper.Null.class : item.getClass();

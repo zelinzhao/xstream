@@ -141,7 +141,7 @@ public class PureJavaReflectionProvider implements ReflectionProvider {
 			if (!fieldModifiersSupported(field)) {
 				continue;
 			}
-			if (IgnoreTypes.ignore(field.getType())) {
+			if (IgnoreTypes.ignore(field.getType(),0)) {
 				continue;
 			}
 			validateFieldAccess(field);
@@ -151,7 +151,7 @@ public class PureJavaReflectionProvider implements ReflectionProvider {
 	}
 
 	public void writeField(Object object, String fieldName, Object value, Class definedIn) {
-		if (IgnoreTypes.ignore(value)) {
+		if (IgnoreTypes.ignore(value,0)) {
 			return;
 		}
 		Field field = fieldDictionary.field(object.getClass(), fieldName, definedIn);

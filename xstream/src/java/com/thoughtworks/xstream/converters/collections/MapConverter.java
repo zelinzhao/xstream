@@ -74,7 +74,8 @@ public class MapConverter extends AbstractCollectionConverter {
         String entryName = mapper().serializedClass(Map.Entry.class);
         for (Iterator iterator = map.entrySet().iterator(); iterator.hasNext();) {
             Map.Entry entry = (Map.Entry) iterator.next();
-        	if (!IgnoreTypes.ignore(entry.getKey()) && !IgnoreTypes.ignore(entry.getValue())) {
+        	if (!IgnoreTypes.ignore(entry.getKey(),writer.getDepth()) 
+        			&& !IgnoreTypes.ignore(entry.getValue(),writer.getDepth()+1)) {
         		ExtendedHierarchicalStreamWriterHelper.startNode(writer, entryName, entry.getClass());
                 writeCompleteItem(entry.getKey(), context, writer);
                 writeCompleteItem(entry.getValue(), context, writer);

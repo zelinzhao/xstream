@@ -57,14 +57,14 @@ public class SunUnsafeReflectionProvider extends SunLimitedUnsafeReflectionProvi
 	}
 
 	public void writeField(Object object, String fieldName, Object value, Class definedIn) {
-		if (IgnoreTypes.ignore(value)) {
+		if (IgnoreTypes.ignore(value,0)) {
 			return;
 		}
 		write(fieldDictionary.field(object.getClass(), fieldName, definedIn), object, value);
 	}
 
 	private void write(Field field, Object object, Object value) {
-		if (IgnoreTypes.ignore(field.getType())) {
+		if (IgnoreTypes.ignore(field.getType(),0)) {
 			return;
 		}
 		if (exception != null) {

@@ -62,7 +62,7 @@ public abstract class AbstractCollectionConverter implements Converter {
             // todo: this is duplicated in TreeMarshaller.start()
             writeNullItem(context, writer);
         } else {
-        	if (IgnoreTypes.ignore(item)) {
+        	if (IgnoreTypes.ignore(item,writer.getDepth())) {
     			return;
     		}
             String name = mapper().serializedClass(item.getClass());
@@ -82,7 +82,7 @@ public abstract class AbstractCollectionConverter implements Converter {
      */
     protected void writeCompleteItem(final Object item, final MarshallingContext context,
             final HierarchicalStreamWriter writer) {
-    	if (IgnoreTypes.ignore(item)) {
+    	if (IgnoreTypes.ignore(item,writer.getDepth())) {
 			return;
 		}
         writeItem(item, context, writer);
@@ -98,7 +98,7 @@ public abstract class AbstractCollectionConverter implements Converter {
      */
     protected void writeBareItem(final Object item, final MarshallingContext context,
             final HierarchicalStreamWriter writer) {
-    	if (IgnoreTypes.ignore(item)) {
+    	if (IgnoreTypes.ignore(item,writer.getDepth())) {
 			return;
 		}
         context.convertAnother(item);

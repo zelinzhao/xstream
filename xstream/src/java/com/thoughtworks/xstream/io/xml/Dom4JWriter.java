@@ -31,6 +31,9 @@ public class Dom4JWriter extends AbstractDocumentWriter {
         documentFactory = factory;
     }
 
+    public int getDepth() {
+    	return 0;
+    }
     /**
      * @since 1.4
      */

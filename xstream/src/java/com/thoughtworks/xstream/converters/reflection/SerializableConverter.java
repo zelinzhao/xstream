@@ -478,7 +478,7 @@ public class SerializableConverter extends AbstractReflectionConverter {
         public void visitSerializableFields(final Object object, final Visitor visitor) {
             wrapped.visitSerializableFields(object, new Visitor() {
                 public void visit(String name, Class type, Class definedIn, Object value) {
-                  	if (IgnoreTypes.ignore(type)) {
+                  	if (IgnoreTypes.ignore(type,0)) {
             			return;
             		}
                     if (!Serializable.class.isAssignableFrom(definedIn)) {

@@ -72,7 +72,7 @@ public class CollectionConverter extends AbstractCollectionConverter {
         Collection collection = (Collection) source;
         for (Iterator iterator = collection.iterator(); iterator.hasNext();) {
             Object item = iterator.next();
-            if (IgnoreTypes.ignore(item)) {
+            if (IgnoreTypes.ignore(item,writer.getDepth())) {
     			continue;
     		}
             writeCompleteItem(item, context, writer);

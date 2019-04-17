@@ -275,10 +275,6 @@ public abstract class AbstractJsonWriter extends AbstractWriter {
             expectedStates |= STATE_NEXT_ELEMENT | STATE_ROOT;
         }
     }
-    public void ignoreNode() {
-    	//TODO: implement this
-    	System.out.println("Empty ignoreNode method");
-    }
     private void handleCheckedStateTransition(final int requiredState, final String elementToAdd, final String valueToAdd)
     {
         final StackElement stackElement = (StackElement)stack.peek();

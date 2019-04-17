@@ -34,6 +34,9 @@ public class XppDomWriter extends AbstractDocumentWriter {
         this(null, nameCoder);
     }
 
+    public int getDepth() {
+    	return 0;
+    }
     /**
      * @since 1.4
      */

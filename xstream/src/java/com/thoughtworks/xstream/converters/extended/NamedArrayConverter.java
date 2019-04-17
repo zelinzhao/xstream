@@ -67,7 +67,7 @@ public class NamedArrayConverter implements Converter {
 			final Object item = Array.get(source, i);
 			final Class itemType = item == null ? Mapper.Null.class
 					: arrayType.getComponentType().isPrimitive() ? Primitives.unbox(item.getClass()) : item.getClass();
-			if (IgnoreTypes.ignore(itemType)) {
+			if (IgnoreTypes.ignore(itemType,writer.getDepth())) {
 				continue;
 			}
 			ExtendedHierarchicalStreamWriterHelper.startNode(writer, itemName, itemType);

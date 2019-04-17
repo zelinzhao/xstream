@@ -128,7 +128,10 @@ public final class SaxWriter extends AbstractXmlWriter implements XMLReader {
     {
         this(true, nameCoder);
     }
-    
+
+    public int getDepth() {
+    	return depth;
+    }
     /**
      * @since 1.4
      */

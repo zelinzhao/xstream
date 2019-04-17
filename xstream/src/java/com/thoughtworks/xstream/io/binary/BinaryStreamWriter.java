@@ -33,7 +33,9 @@ public class BinaryStreamWriter implements ExtendedHierarchicalStreamWriter {
     public BinaryStreamWriter(OutputStream outputStream) {
         out = new DataOutputStream(outputStream);
     }
-
+    public int getDepth() {
+    	return 0;
+    }
     public void startNode(String name) {
         write(new Token.StartNode(idRegistry.getId(name)));
     }
@@ -52,10 +54,6 @@ public class BinaryStreamWriter implements ExtendedHierarchicalStreamWriter {
 
     public void endNode() {
         write(new Token.EndNode());
-    }
-    public void ignoreNode() {
-    	//TODO: implement this
-    	System.out.println("Empty ignoreNode method");
     }
     public void flush() {
         try {
