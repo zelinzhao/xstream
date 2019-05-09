@@ -17,28 +17,35 @@ public class IgnoreTypes {
 	private static OutputStream log = new BufferedOutputStream(System.out);
 
 	private static int maxDepth = Integer.MAX_VALUE;
-
 	public static void addIgnoreName(String name) {
-		if (name != null)
+		if (name != null) {
 			ignoreNames.add(name);
+			write("Add ignore "+name);
+		}
 	}
 
 	public static void addAllIgnoreNames(Collection<String> names) {
-		if (names != null)
+		if (names != null) {
 			ignoreNames.addAll(names);
+			for(String s:names){
+				write("Add ignore "+s);
+			}
+		}
 	}
 
 	public static void addIgnorePattern(String pattern) {
 		if (pattern != null) {
 			Pattern p = Pattern.compile(pattern);
 			ignorePatterns.add(p);
+			write("Add ignore pattern "+pattern);
 		}
 	}
 
 	public static void addAllIgnorePatterns(Collection<String> patterns) {
 		if (patterns != null)
-			for (String str : patterns)
+			for (String str : patterns) {
 				addIgnorePattern(str);
+			}
 	}
 
 	private static void write(String msg) {
