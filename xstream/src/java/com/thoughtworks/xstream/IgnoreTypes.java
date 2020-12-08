@@ -20,7 +20,6 @@ public class IgnoreTypes {
 	public static void addIgnoreName(String name) {
 		if (name != null) {
 			ignoreNames.add(name);
-			write("Add ignore "+name);
 		}
 	}
 
@@ -28,7 +27,6 @@ public class IgnoreTypes {
 		if (names != null) {
 			ignoreNames.addAll(names);
 			for(String s:names){
-				write("Add ignore "+s);
 			}
 		}
 	}
@@ -37,7 +35,6 @@ public class IgnoreTypes {
 		if (pattern != null) {
 			Pattern p = Pattern.compile(pattern);
 			ignorePatterns.add(p);
-			write("Add ignore pattern "+pattern);
 		}
 	}
 
