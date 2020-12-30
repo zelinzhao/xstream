@@ -57,7 +57,7 @@ public class IgnoreTypes {
 	public static void setMaxDepth(int max) {
 		if (max != 0)
 			maxDepth = max;
-		write("Max depth is " + maxDepth);
+//		write("Max depth is " + maxDepth);
 	}
 
 	public static boolean ignore(Class cla, int depth) {
@@ -68,7 +68,7 @@ public class IgnoreTypes {
 		for (Pattern p : ignorePatterns) {
 			if ((name1 != null && p.matcher(name1).matches()) || (name2 != null && p.matcher(name2).matches())) {
 				if (!ignoredResult.contains(name1)) {
-					write("Ignore type " + name1);
+//					write("Ignore type " + name1);
 					ignoredResult.add(name1);
 				}
 				return true;
@@ -76,7 +76,7 @@ public class IgnoreTypes {
 		}
 		if (ignoreNames.contains(name1) || ignoreNames.contains(name2)) {
 			if (!ignoredResult.contains(name1)) {
-				write("Ignore type " + name1);
+//				write("Ignore type " + name1);
 				ignoredResult.add(name1);
 			}
 			return true;
